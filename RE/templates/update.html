@@ -1,0 +1,35 @@
+<html>
+    <head>
+        {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <div class="container-fluit">
+            <div class="col-md-offset-1 col-md-4">
+                <form action="/updateData/{{data.id}}" method="POST" autocomplete="off">
+                    {% csrf_token %}
+                    <h3>Data-Base</h3>
+                    <div class="form-group">
+                        <label>Name:</label><br>
+                        <input type="text" class="form-control" value="{{data.Name}}" name="name"><br>
+                    </div>
+                    <div class="form-group">
+                        <label>Age:</label><br>
+                        <input type="number" class="form-control" value="{{data.Age}}" name="age"><br>
+                    </div>
+                    <div class="form-group">
+                        <label>Department:</label><br>
+                        <input type="text" class="form-control" value="{{data.Department}}" name="department"><br>
+                    </div>
+                    <div class="form-group">
+                        <label>Address:</label><br>
+                        <input type="text" class="form-control" value="{{data.Address}}" name="address"><br>
+                    </div>
+                    <div class="form-group pull-right">
+                        <input type="submit" value="update" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

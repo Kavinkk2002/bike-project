@@ -1,0 +1,122 @@
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <style>
+            #con{list-style: none;padding: 20px;}
+            #con1{font-size: 20px;transition: 1s;}
+            #con1:hover{font-size: 25px;color: rgb(0, 234, 255);}
+            a{text-decoration: none;color: inherit;}
+            form{margin-left: 340px;}
+            div#nav{list-style-type: none;margin: 0;padding: 0;overflow: hidden;}
+            #nav1{float: right;}
+            #nav1{display:block;color: white;text-align: center;padding-left: 25px;text-decoration: none;font-size: 15px;transition: 1s;margin-right: 30px;}
+            #nav1:hover{color: rgb(255, 145, 0);font-size: 18px;}
+            #bikeform{margin-top: 50px;}
+            #log{font-size: 15px; transition: 1s;}
+            #log:hover{font-size: 18px;color: rgb(255, 145, 0);}
+            #log{float:left;padding-right: 6px;}
+
+        </style>
+    </head>
+    <body>
+        <h1>Royal Enfield</h1>
+        <header>
+        <div>
+        <ul id="nav">
+            <li id="nav1"><a href="contact">Contact</a></li>
+            <li id="nav1"><a href="news">News</a></li>
+            <li id="nav1"><a href="about">About</a></li>
+            <li id="nav1"><a href="index">Home</a></li>
+        </ul>
+        </div>
+        </header>
+        <a href="login"><h3 id="log">Login Page</h3></a>
+        <a href="register"><h3 id="log">Register page</h3></a>
+        <div>
+            <form id="bikeForm">
+                <label style="color: rgb(0, 0, 0);font-size: 15px;">Search:</label>
+                <input type="text" placeholder="search" list="browsers" name="browser" id="browserInput">
+                <datalist id="browsers">
+                    <option value="Classic 350">
+                    <option value="Continental GT 650"></option>
+                    <option value="Interseptor 650"></option>
+                    <option value="Hunter 350"></option>
+                    <option value="RE bullet"></option>
+                </datalist>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <ul id="con">
+            <a href="bike"><li id="con1">Classic 350</li></a>
+            <a href="gt"><li id="con1">Continental GT 650</li></a>
+            <a href="inter"><li id="con1">Interseptor 650</li></a>
+            <a href="hunter"><li id="con1">Hunter 350</li></a>
+            <a href="bullet"><li id="con1">RE bullet</li></a>
+        </ul>
+        <script>
+            document.getElementById("bikeForm").addEventListener("submit",function(event){
+                event.preventDefault();
+
+                var selectedbike = document.getElementById("browserInput").value;
+
+                if(selectedbike === "Classic 350"){
+                    window.location.href = "{% url 'bike' %}";
+                }else if(selectedbike === "Continental GT 650"){
+                    window.location.href = "{% url 'gt' %}";
+                }else if(selectedbike === "Interseptor 650"){
+                    window.location.href = "{% url 'inter' %}";
+                }else if(selectedbike === "Hunter 350"){
+                    window.location.href = "{% url 'hunter' %}";
+                }else if(selectedbike === "RE bullet"){
+                    window.location.href = "{% url 'bullet' %}";
+                }
+            });
+        </script>
+        <form action="addData" method="POST">
+            {% csrf_token %}
+            <label>Name:</label><br>
+            <input type="text" name="name"><br>
+            <label>Age:</label><br>
+            <input type="number" name="age"><br>
+            <label>Department:</label><br>
+            <input type="text" name="dep"><br>
+            <label>Address:</label><br>
+            <input type="text" name="add"><br>
+            <input type="submit">
+        </form>
+
+        <div class="">
+            {% if datas %}
+            <h3>View Details</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Department</th>
+                        <th>Address</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                {% for data in datas %}
+                <tbody>
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{data.Name}}</td>
+                        <td>{{data.Age}}</td>
+                        <td>{{data.Department}}</td>
+                        <td>{{data.Address}}</td>
+                        <td><a class="btn btn-success" href="updateData/{{data.id}}">Update</a></td>
+                        <td><a class="btn btn-success" href="deleteData/{{data.id}}">Delete</a></td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+    </body>
+</html>
